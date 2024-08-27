@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elif Neva</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌳</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.2rem;
+            font-weight: 300;
+            margin: 10px 0;
+            position: relative;
+            z-index: 2;
+            color: #2c3e50;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .subtext {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: #4CAF50;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .subtext a {
+            color: #4CAF50;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .subtext a:hover {
+            color: #45a049;
+        }
+
+        .background-leaves {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .leaf {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(76, 175, 80, 0.1);
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        .social-icons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .icon svg {
+            width: 24px;
+            height: 24px;
+            transition: fill 0.3s ease;
+        }
+
+        .linkedin-icon svg {
+            fill: #0077B5;
+        }
+
+        .linkedin-icon:hover svg {
+            fill: #005885;
+        }
+
+        .mail-icon svg {
+            fill: #D44638;
+        }
+
+        .mail-icon:hover svg {
+            fill: #B23121;
+        }
+
+        .info-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            padding: 10px;
+            max-width: 300px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 3;
+            transition: all 0.3s ease;
+        }
+
+        .info-box.minimized {
+            max-height: 40px; /* Reduce this value */
+            overflow: hidden;
+        }
+
+        .info-box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0; /* Change this from 10px to 0 */
+            cursor: pointer;
+            text-align: center; /* Added this line */
+        }
+
+        .info-box-title {
+            font-weight: bold;
+            color: #4CAF50;
+            flex-grow: 1; /* Added this line */
+        }
+
+        .info-box-toggle {
+            background: none;
+            border: none;
+            color: #4CAF50;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        .info-box-content {
+            display: none;
+        }
+
+        .info-box:not(.minimized) .info-box-content {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .subtext {
+                font-size: 1.5rem;
+            }
+
+            .profile-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .info-box {
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtext {
+                font-size: 1.2rem;
+            }
+
+            .profile-image {
+                width: 120px;
+                height: 120px;
+            }
+
+            .info-box {
+                max-width: 200px;
+                font-size: 0.9em;
+            }
+
+            .linkedin-icon svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-screen">
+        <div id="loading-emoji">⚡</div>
+    </div>
+    <div class="background-leaves" id="backgroundLeaves"></div>
+    <img src="neva.png" alt="Neva Beşkonaklı" class="profile-image">
+    <h1>Elif Neva Beşkonaklı</h1>
+    <p class="subtext"><a href="https://bioclimaticarchitecture.substack.com/" target="_blank">Bioclimatic Architecture</a></p>
+
+    <div class="social-icons">
+        <a href="mailto:nevabeskonakli@gmail.com" class="icon mail-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+        </a>
+        <a href="https://www.linkedin.com/in/neva-beskonakli/" target="_blank" class="icon linkedin-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+        </a>
+    </div>
+
+    <div class="info-box minimized" id="infoBox">
+        <div class="info-box-header" id="infoBoxHeader">
+            <span class="info-box-title">About Elif Neva</span>
+            <button class="info-box-toggle" id="infoBoxToggle">+</button>
+        </div>
+        <div class="info-box-content">
+            <p>Elif Neva Beşkonaklı is a passionate architect specializing in bioclimatic design. With a Bachelor of Architecture from Virginia Tech University and a Master of Architecture from the Architectural Association, she brings a unique perspective to sustainable building practices.</p>
+            <p>Her work focuses on creating harmonious structures that work with the local climate and environment, emphasizing energy efficiency and occupant comfort. Elif Neva's expertise includes passive solar design, natural ventilation strategies, and the integration of sustainable materials in architectural projects.</p>
+        </div>
+    </div>
+
+    <style>
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+        }
+
+        #loading-screen.fade-out {
+            opacity: 0;
+        }
+
+        #loading-emoji {
+            font-size: 5rem;
+            animation: fade 1.5s infinite alternate;
+        }
+
+        @keyframes fade {
+            from { opacity: 0.2; }
+            to { opacity: 1; }
+        }
+    </style>
+
+    <script>
+        const backgroundLeaves = document.getElementById('backgroundLeaves');
+        const leafEmoji = '🌳';
+
+        function createLeaf() {
+            const leaf = document.createElement('div');
+            leaf.className = 'leaf';
+            leaf.style.left = `${Math.random() * 100}%`;
+            leaf.style.animationDuration = `${Math.random() * 20 + 10}s`;
+            leaf.textContent = leafEmoji;
+            
+            backgroundLeaves.appendChild(leaf);
+            
+            leaf.addEventListener('animationiteration', () => {
+                leaf.remove();
+                createLeaf();
+            });
+        }
+
+        function startLeafAnimation() {
+            // Create initial set of leaves
+            for (let i = 0; i < 50; i++) {
+                createLeaf();
+            }
+        }
+
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const loadingScreen = document.getElementById('loading-screen');
+                loadingScreen.classList.add('fade-out');
+                loadingScreen.addEventListener('transitionend', function() {
+                    loadingScreen.style.display = 'none';
+                    // Start leaf animation after loading screen is hidden
+                    startLeafAnimation();
+                });
+            }, 3000);
+        });
+
+        // Info box functionality
+        const infoBox = document.getElementById('infoBox');
+        const infoBoxHeader = document.getElementById('infoBoxHeader');
+        const infoBoxToggle = document.getElementById('infoBoxToggle');
+
+        infoBoxHeader.addEventListener('click', () => {
+            infoBox.classList.toggle('minimized');
+            infoBoxToggle.textContent = infoBox.classList.contains('minimized') ? '+' : '-';
+        });
+    </script>
+</body>
+</html>
