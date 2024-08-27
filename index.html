@@ -227,7 +227,7 @@
 </head>
 <body>
     <div id="loading-screen">
-        <div id="loading-emoji">⚡</div>
+        <div id="loading-emoji">🌳</div>
     </div>
     <div class="background-leaves" id="backgroundLeaves"></div>
     <img src="neva.png" alt="Neva Beşkonaklı" class="profile-image">
@@ -290,30 +290,7 @@
     </style>
 
     <script>
-        const backgroundLeaves = document.getElementById('backgroundLeaves');
-        const leafEmoji = '🌳';
-
-        function createLeaf() {
-            const leaf = document.createElement('div');
-            leaf.className = 'leaf';
-            leaf.style.left = `${Math.random() * 100}%`;
-            leaf.style.animationDuration = `${Math.random() * 20 + 10}s`;
-            leaf.textContent = leafEmoji;
-            
-            backgroundLeaves.appendChild(leaf);
-            
-            leaf.addEventListener('animationiteration', () => {
-                leaf.remove();
-                createLeaf();
-            });
-        }
-
-        function startLeafAnimation() {
-            // Create initial set of leaves
-            for (let i = 0; i < 50; i++) {
-                createLeaf();
-            }
-        }
+      
 
         window.addEventListener('load', function() {
             setTimeout(function() {
